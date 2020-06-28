@@ -5,7 +5,7 @@
             "name": "Launch Debug Executable",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/Debug/bin/TemplateProject",
+            "program": "${workspaceFolder}/build/Debug/bin/ExampleApp",
             "cwd": "${workspaceFolder}"
         }
     ]
