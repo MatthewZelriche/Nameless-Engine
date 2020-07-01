@@ -3,7 +3,11 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/NamelessLib/include/"
+                "${workspaceFolder}/NamelessLib/include/",
+                "${workspaceFolder}/Vendor/glfw/include/",
+                "${workspaceFolder}/Vendor/Nameless-Logger/include/",
+                "${workspaceFolder}/Vendor/Nameless-Logger/Vendor/spdlog/include/",
+                "${workspaceFolder}/Vendor/glm/"
             ],
             "cppStandard": "c++17",
             "intelliSenseMode": "gcc-x64",

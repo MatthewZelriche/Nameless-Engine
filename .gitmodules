@@ -1,0 +1,12 @@
+[submodule "Vendor/glfw"]
+	path = Vendor/glfw
+	url = https://github.com/glfw/glfw.git
+[submodule "Vendor/Nameless-Logger"]
+	path = Vendor/Nameless-Logger
+	url = https://github.com/MatthewZelriche/Nameless-Logger.git
+[submodule "Vendor/glm"]
+	path = Vendor/glm
+	url = https://github.com/g-truc/glm.git
+[submodule "Vendor/cereal"]
+	path = Vendor/cereal
+	url = https://github.com/USCiLab/cereal.git
