@@ -1,13 +1,14 @@
 #include <iostream>
 #include <Log.hpp>
 
-#include "NLS-Engine/Placeholder.hpp"
+#include "Game.hpp"
+
+#define GLFW_INCLUDE_VULKAN
+#include <GLFW/glfw3.h>
 
 int main() {
-    //std::cout << "Hello world, from NamelessEngine!" << std::endl;
-    NLSLOG::Info("Game", "This is a testttt");
+    Game game;
+    game.Run();
 
-    Placeholder placeholder;
-    placeholder.Test();
     return 0;
 }

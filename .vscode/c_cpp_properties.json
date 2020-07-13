@@ -7,7 +7,8 @@
                 "${workspaceFolder}/Vendor/glfw/include/",
                 "${workspaceFolder}/Vendor/Nameless-Logger/include/",
                 "${workspaceFolder}/Vendor/Nameless-Logger/Vendor/spdlog/include/",
-                "${workspaceFolder}/Vendor/glm/"
+                "${workspaceFolder}/Vendor/glm/",
+                "${workspaceFolder}/Vendor/robin-hood-hashing/include/"
             ],
             "cppStandard": "c++17",
             "intelliSenseMode": "gcc-x64",
