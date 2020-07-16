@@ -8,7 +8,8 @@
                 "${workspaceFolder}/Vendor/Nameless-Logger/include/",
                 "${workspaceFolder}/Vendor/Nameless-Logger/Vendor/spdlog/include/",
                 "${workspaceFolder}/Vendor/glm/",
-                "${workspaceFolder}/Vendor/robin-hood-hashing/include/"
+                "${workspaceFolder}/Vendor/robin-hood-hashing/include/",
+                "${workspaceFolder}/Vendor/LeksysINI/"
             ],
             "cppStandard": "c++17",
             "intelliSenseMode": "gcc-x64",

@@ -6,7 +6,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/Debug/bin/ExampleApp",
-            "cwd": "${workspaceFolder}"
+            "cwd": "${workspaceFolder}/build/Debug/bin/"
         }
     ]
 }

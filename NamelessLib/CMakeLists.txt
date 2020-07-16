@@ -17,14 +17,19 @@ endif(DOXYGEN_FOUND)
 set(VENDOR_INCLUDE_DIRS "${CMAKE_SOURCE_DIR}/Vendor/glfw/include"
                         "${CMAKE_SOURCE_DIR}/Vendor/Nameless-Logger/include"
                         "${CMAKE_SOURCE_DIR}/Vendor/glm/"
-                        "${CMAKE_SOURCE_DIR}/Vendor/robin-hood-hashing/include/")
+                        "${CMAKE_SOURCE_DIR}/Vendor/robin-hood-hashing/include/"
+                        "${CMAKE_SOURCE_DIR}/Vendor/LeksysINI/")
 set(NLSLIB_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/include/")
 
 set(NLSLIB_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/Core/IGameTemplate.hpp"
                     "${CMAKE_CURRENT_SOURCE_DIR}/src/Core/IGameTemplate.cpp"
                     "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/EventSystem/Event.hpp"
                     "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/EventSystem/EventCapable.hpp"
-                    "${CMAKE_CURRENT_SOURCE_DIR}/src/EventSystem/EventCapable.cpp")
+                    "${CMAKE_CURRENT_SOURCE_DIR}/src/EventSystem/EventCapable.cpp"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/IO/KeyBindingSet.hpp"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/IO/ReadWriteFile.hpp"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/src/IO/ReadWriteFile.cpp"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/src/IO/KeyBindingSet.cpp")
 
 add_library(NamelessLib SHARED ${NLSLIB_SOURCES})
 

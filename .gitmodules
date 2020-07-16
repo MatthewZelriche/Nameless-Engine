@@ -10,3 +10,6 @@
 [submodule "Vendor/cereal"]
 	path = Vendor/cereal
 	url = https://github.com/USCiLab/cereal.git
+[submodule "Vendor/LeksysINI"]
+	path = Vendor/LeksysINI
+	url = https://github.com/Lek-sys/LeksysINI.git

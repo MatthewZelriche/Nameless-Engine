@@ -6,5 +6,9 @@ set(SOURCES     "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp"
                 "${CMAKE_CURRENT_SOURCE_DIR}/src/Game.hpp"
                 "${CMAKE_CURRENT_SOURCE_DIR}/src/Game.cpp")
 
+# Move config files to bin directory. 
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/config/controls.ini" "${CMAKE_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/bin" COPYONLY)
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/config/settings.ini" "${CMAKE_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/bin" COPYONLY)
+
 add_executable(ExampleApp ${SOURCES})
 target_link_libraries(ExampleApp NamelessLib)
