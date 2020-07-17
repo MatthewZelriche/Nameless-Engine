@@ -138,6 +138,7 @@ protected:
     * @see QueueNewEvent
     */
     void static ProcessEventQueue() { 
+        glfwPollEvents();
         if (!sListOfQueuedEvents.empty()) {
             for (auto &queuedEvent : sListOfQueuedEvents) {
                 for (auto &callback : sQueuedCallbacks.at(queuedEvent.GetEventType())) {

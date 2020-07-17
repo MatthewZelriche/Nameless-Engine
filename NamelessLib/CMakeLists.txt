@@ -29,7 +29,11 @@ set(NLSLIB_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/Core/IGameTem
                     "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/IO/KeyBindingSet.hpp"
                     "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/IO/ReadWriteFile.hpp"
                     "${CMAKE_CURRENT_SOURCE_DIR}/src/IO/ReadWriteFile.cpp"
-                    "${CMAKE_CURRENT_SOURCE_DIR}/src/IO/KeyBindingSet.cpp")
+                    "${CMAKE_CURRENT_SOURCE_DIR}/src/IO/KeyBindingSet.cpp"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/Rendering/WindowManager.hpp"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/Rendering/Window.hpp"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/src/Rendering/WindowManager.cpp"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/src/Rendering/Window.cpp")
 
 add_library(NamelessLib SHARED ${NLSLIB_SOURCES})
 

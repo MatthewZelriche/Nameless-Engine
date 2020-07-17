@@ -15,13 +15,10 @@ void Game::OnKeyPressed(const NLS::EVENT::OnKeyPressedEvent &test) {
     NLSLOG::Info("Game", "Key pressed!");
 }
 
-
-void Game::OnUpdate() {
-    glfwInit();
-
-    GLFWwindow *window = glfwCreateWindow(900, 900, "my window", NULL, NULL);
-
-    NLS::EVENT::OnWinFocusChangedEvent myEvent(window);
+Game::Game() {
+    mWindow = NLS::RENDERING::WindowManager::ConstructWindow("First Window");
+    mSecondWindow = NLS::RENDERING::WindowManager::ConstructWindow("First Window");
+    NLS::EVENT::OnWinFocusChangedEvent myEvent(mWindow.lock()->GetGLFWWindowInstance());
     NLS::EVENT::OnKeyPressedEvent eventKey;
 
     RegisterForEvent<NLS::EVENT::OnWinFocusChangedEvent>(std::bind(&Game::Callback, this, std::placeholders::_1), true);
@@ -47,5 +44,8 @@ void Game::OnUpdate() {
     SendBlockingEvent(myEvent);
     //QueueNewEvent(myEvent);
 
+}
+
+void Game::OnUpdate() {
     ProcessEventQueue();
 }
