@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <functional>
 #include <vector>
 #include <robin-hood/robin_hood.h>
@@ -21,7 +22,7 @@ class NLS_API_EXPORT EventCapable {
 private:
     static robin_hood::unordered_flat_map<EventType, std::vector<std::function<void(BaseEvent&)>>> sBlockingCallbacks;
     static robin_hood::unordered_flat_map<EventType, std::vector<std::function<void(BaseEvent&)>>> sQueuedCallbacks;
-    static std::vector<BaseEvent> sListOfQueuedEvents;
+    static std::vector<std::unique_ptr<BaseEvent>> sListOfQueuedEvents;
 public:
     virtual ~EventCapable() = 0;
 protected:
@@ -121,10 +122,12 @@ protected:
     * 
     * @see ProcessEventQueue
     */
+    // The event object is passed by value instead of reference because we need to std::move it into the queue to convert it to a pointer,
+    // and we don't want to invalidate the original event object the user gave us.
     template<class EventChild>
     typename std::enable_if<std::is_base_of<BaseEvent, EventChild>::value>::type   
-    static QueueNewEvent(EventChild &event) { 
-        sListOfQueuedEvents.emplace_back(event);
+    static QueueNewEvent(EventChild event) { 
+        sListOfQueuedEvents.emplace_back(std::make_unique<EventChild>(std::move(event)));
     }
 
     /**
@@ -137,16 +140,6 @@ protected:
     * 
     * @see QueueNewEvent
     */
-    void static ProcessEventQueue() { 
-        glfwPollEvents();
-        if (!sListOfQueuedEvents.empty()) {
-            for (auto &queuedEvent : sListOfQueuedEvents) {
-                for (auto &callback : sQueuedCallbacks.at(queuedEvent.GetEventType())) {
-                    callback(queuedEvent);
-                }
-            }
-            sListOfQueuedEvents.clear();
-        }
-    }
+    void static ProcessEventQueue();
 };
 }

@@ -2,6 +2,9 @@
 
 #include "Log.hpp"
 
+#include <NLS-Engine/IO/KeyBindingSet.hpp>
+#include <NLS-Engine/IO/InputManager.hpp>
+
 
 void Game::Callback(const NLS::EVENT::OnWinFocusChangedEvent &test) {
     NLSLOG::Info("Game", "Win Focus Changed! {}", (void*)test.GetActiveWindow());
@@ -16,6 +19,12 @@ void Game::OnKeyPressed(const NLS::EVENT::OnKeyPressedEvent &test) {
 }
 
 Game::Game() {
+
+    NLS::INPUT::KeyBindingSet mySet { "Jump", "Shoot", "Lurch" };
+
+    NLS::INPUT::InputManager::LoadActiveKeybindingSet(std::move(mySet));
+
+
     mWindow = NLS::RENDERING::WindowManager::ConstructWindow("First Window");
     mSecondWindow = NLS::RENDERING::WindowManager::ConstructWindow("First Window");
     NLS::EVENT::OnWinFocusChangedEvent myEvent(mWindow.lock()->GetGLFWWindowInstance());
@@ -48,4 +57,16 @@ Game::Game() {
 
 void Game::OnUpdate() {
     ProcessEventQueue();
+
+    if (NLS::INPUT::InputManager::GetKeyDown("Jump")) {
+        NLSLOG::Info("Game", "Player Jumped");
+    }
+
+    if (NLS::INPUT::InputManager::GetKeyDown("Lurch", mWindow.lock()->GetGLFWWindowInstance())) {
+        NLSLOG::Info("Game", "Player Lurched");
+    }
+
+    if (NLS::INPUT::InputManager::GetKeyDownSysDelay("Shoot")) {
+        NLSLOG::Info("Game", "Pew pew");
+    }
 }

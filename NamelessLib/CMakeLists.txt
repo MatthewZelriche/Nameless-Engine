@@ -33,9 +33,13 @@ set(NLSLIB_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/Core/IGameTem
                     "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/Rendering/WindowManager.hpp"
                     "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/Rendering/Window.hpp"
                     "${CMAKE_CURRENT_SOURCE_DIR}/src/Rendering/WindowManager.cpp"
-                    "${CMAKE_CURRENT_SOURCE_DIR}/src/Rendering/Window.cpp")
+                    "${CMAKE_CURRENT_SOURCE_DIR}/src/Rendering/Window.cpp"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/IO/InputManager.hpp"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/src/IO/InputManager.cpp")
 
 add_library(NamelessLib SHARED ${NLSLIB_SOURCES})
+set_target_properties(NamelessLib PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/bin")
+
 
 set_target_properties(NamelessLib PROPERTIES CXX_VISIBILITY_PRESET hidden)
 generate_export_header(NamelessLib BASE_NAME NLS_API EXPORT_FILE_NAME "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/Core/NLS_API_Export.h")

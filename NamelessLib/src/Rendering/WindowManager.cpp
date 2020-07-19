@@ -39,6 +39,6 @@ std::weak_ptr<NLS::RENDERING::Window> NLS::RENDERING::WindowManager::ConstructWi
 void NLS::RENDERING::WindowManager::GetActiveWindow(GLFWwindow* window, int focused) {
     NLS::EVENT::OnWinFocusChangedEvent windowFocusChanged(window); 
     if (focused) {
-        SendBlockingEvent(windowFocusChanged);
+        QueueNewEvent(windowFocusChanged);
     }
 }

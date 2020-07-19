@@ -9,7 +9,7 @@ NLS::INPUT::KeyBindingSet::KeyBindingSet(std::initializer_list<std::string> list
     for (auto &actionName : listOfValidKeyBinds) { 
         // Fill the map with the list of key commands the game has specified.
         // Since no keyset has loaded yet, set every key to invalid key. 
-        mKeyBindings[actionName] = -1;
+        mKeyBindings[actionName] = KeyCode::KeyUnknown;
     }
     LoadSetFromFile();
 }
@@ -27,10 +27,10 @@ void NLS::INPUT::KeyBindingSet::LoadSetFromFile(const std::string &setName) {
     for (INI::Section::values_iter it = subsection->ValuesBegin(); it != subsection->ValuesEnd(); ++it) {
         // Check to confirm the actions in controls.ini are valid game actions. 
         if (mKeyBindings.count(it->first)) {
-
-            // Test if the keycode is entirely unique to this keybinding set. 
-            if(mRawKeyCodeValues.insert(it->second.AsInt()).second) {
-                mKeyBindings[it->first] = it->second.AsInt();
+            // Test if the keycode is entirely unique to this keybinding set.
+            if(mRawKeyCodeValues.insert(static_cast<KeyCode>(it->second.AsInt())).second) {
+                KeyCode dgaf = static_cast<KeyCode>(it->second.AsInt());
+                mKeyBindings[it->first] = static_cast<KeyCode>(it->second.AsInt());
             } else {
                 NLSLOG::Error("Engine", "Keycode '{}' defined for action '{}' in controls.ini, but this keycode has already been defined!", it->second.AsInt(), it->first);
                 throw std::runtime_error("Fatal error.");
@@ -41,7 +41,7 @@ void NLS::INPUT::KeyBindingSet::LoadSetFromFile(const std::string &setName) {
     }
 }
 
-void NLS::INPUT::KeyBindingSet::BindNewKeycode(const std::string &keybindName, int keycode) {
+void NLS::INPUT::KeyBindingSet::BindNewKeycode(const std::string &keybindName, KeyCode keycode) {
     // Confirm the action actually exists.
     if (mKeyBindings.count(keybindName)) {
         // We need to first erase the original value from our raw set to "free" it to be used again in the future. 
@@ -65,8 +65,17 @@ void NLS::INPUT::KeyBindingSet::SaveSetToFile(const std::string &setName) {
         throw std::runtime_error("Fatal error.");
     }
     for(auto &keybind : mKeyBindings) {
-        section->SetValue(keybind.first, keybind.second);
+        section->SetValue(keybind.first, static_cast<int>(keybind.second));
     }
 
     config.Save("controls.ini");
+}
+
+NLS::INPUT::KeyCode NLS::INPUT::KeyBindingSet::GetActionKeybind(const std::string &actionKeybindName) const {
+    if (mKeyBindings.count(actionKeybindName) != 0) {
+        return mKeyBindings.at(actionKeybindName);
+    } else {
+        NLSLOG::Warn("Engine", "Action '{}' requested but does not exist.", actionKeybindName);
+        return KeyCode::KeyUnknown;
+    }
 }

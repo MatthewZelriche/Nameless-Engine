@@ -5,15 +5,16 @@
 #include <set>
 
 #include "NLS-Engine/Core/NLS_API_Export.h"
+#include "NLS-Engine/IO/KeyCodes.hpp"
 
 namespace NLS::INPUT {
 
 class NLS_API_EXPORT KeyBindingSet {
 private:
     // A map of "actions" and "keycodes".
-    std::unordered_map<std::string, int> mKeyBindings;
+    std::unordered_map<std::string, KeyCode> mKeyBindings;
     // This set holds every keycode thats currently bound for this set, to ensure a keycode isn't bound more than once.
-    std::set<int> mRawKeyCodeValues;
+    std::set<KeyCode> mRawKeyCodeValues;
     /**
     * @brief Opens controls.ini config file and loads values into the KeyBindingSet.
     * 
@@ -38,12 +39,14 @@ public:
     * @param keybindName The name of the keybind action to change. 
     * @param keycode The new keycode to assign to the keybind action.
     */
-    void BindNewKeycode(const std::string &keybindName, int keycode);
+    void BindNewKeycode(const std::string &keybindName, KeyCode keycode);
     /**
     * @brief Saves the current keybindings to controls.ini
     * 
     * @param setName The name of the Keybinding Subsection to save to. This allows multiple KeyBindingSets to be saved in controls.ini at once. 
     */
     void SaveSetToFile(const std::string &setName = "Main");
+
+    KeyCode GetActionKeybind(const std::string &actionKeybindName) const;
 };
 }

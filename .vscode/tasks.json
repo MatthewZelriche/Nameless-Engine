@@ -6,7 +6,8 @@
             "type": "shell",
             "command": "make",
             "args": [
-                "-Cbuild/Debug"
+                "-Cbuild/Debug",
+                "-j8"
             ],
             "group": {
                 "kind": "build",
@@ -22,7 +23,8 @@
             "type": "shell",
             "command": "make",
             "args": [
-                "-Cbuild/Release"
+                "-Cbuild/Release",
+                "-j8"
             ],
             "group": {
                 "kind": "build",
