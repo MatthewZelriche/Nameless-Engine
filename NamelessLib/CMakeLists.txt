@@ -38,8 +38,10 @@ set(NLSLIB_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/Core/IGameTem
                     "${CMAKE_CURRENT_SOURCE_DIR}/src/IO/InputManager.cpp")
 
 add_library(NamelessLib SHARED ${NLSLIB_SOURCES})
-set_target_properties(NamelessLib PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/bin")
-
+# To ensure functionality on Win10 with LeksysINI
+if (MSVC)
+	target_compile_options(NamelessLib PUBLIC "/Zc:__cplusplus")
+endif()
 
 set_target_properties(NamelessLib PROPERTIES CXX_VISIBILITY_PRESET hidden)
 generate_export_header(NamelessLib BASE_NAME NLS_API EXPORT_FILE_NAME "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/Core/NLS_API_Export.h")

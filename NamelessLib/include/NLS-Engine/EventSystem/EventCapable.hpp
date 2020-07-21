@@ -20,8 +20,8 @@ namespace NLS::EVENT {
 */
 class NLS_API_EXPORT EventCapable {
 private:
-    static robin_hood::unordered_flat_map<EventType, std::vector<std::function<void(BaseEvent&)>>> sBlockingCallbacks;
-    static robin_hood::unordered_flat_map<EventType, std::vector<std::function<void(BaseEvent&)>>> sQueuedCallbacks;
+    static robin_hood::unordered_node_map<EventType, std::vector<std::function<void(BaseEvent&)>>> sBlockingCallbacks;
+    static robin_hood::unordered_node_map<EventType, std::vector<std::function<void(BaseEvent&)>>> sQueuedCallbacks;
     static std::vector<std::unique_ptr<BaseEvent>> sListOfQueuedEvents;
 public:
     virtual ~EventCapable() = 0;
@@ -46,12 +46,12 @@ protected:
 
         if (!isBlocking) {
             if (sQueuedCallbacks.count(type) == 0) {
-                sQueuedCallbacks.insert(robin_hood::pair<EventType, std::vector<std::function<void(BaseEvent&)>>>(type, std::vector<std::function<void(BaseEvent&)>>()));
+                sQueuedCallbacks[type] = std::vector<std::function<void(BaseEvent&)>>();
             }
             sQueuedCallbacks[type].emplace_back(callback);
         } else {
             if (sBlockingCallbacks.count(type) == 0) {
-                sBlockingCallbacks.insert(robin_hood::pair<EventType, std::vector<std::function<void(BaseEvent&)>>>(type, std::vector<std::function<void(BaseEvent&)>>()));
+                sBlockingCallbacks[type] = std::vector<std::function<void(BaseEvent&)>>();
             }
             sBlockingCallbacks[type].emplace_back(callback);
         }
@@ -74,27 +74,21 @@ protected:
         // This lambda then just calls the original function callback with the original parameter type. 
         std::function<void(BaseEvent&)> callback = [=](BaseEvent &event) { eventCallback(*static_cast<EventChild*>(std::addressof(event))); };
 
-        // I don't know exactly why I have to do iter->template target instead of iter->target? But it works now. 
+        // Had to switch from flat map to node map to ensure stable references, otherwise it was causing crashing on windows.
         if (!isBlocking) {
-            for (auto iter = sQueuedCallbacks[type].begin(); iter != sQueuedCallbacks[type].end();) {
-                if (iter->template target<std::function<void(BaseEvent &event)>>() == callback.target<std::function<void(BaseEvent &event)>>()) {
+            for (auto &element : sQueuedCallbacks[type]) {
+                if (element.template target<std::function<void(BaseEvent &event)>>() == callback.target<std::function<void(BaseEvent &event)>>()) {
                     // Pop and swap for performance - order of the vector does not matter. 
-                    std::swap(*iter, sQueuedCallbacks[type].back());
+                    std::swap(element, sQueuedCallbacks[type].back());
                     sQueuedCallbacks[type].pop_back();
-                } else {
-                    // We should only be iterating if a match was not found, so that we do not invalidate the iterator. 
-                    iter++;
                 }
             }
         } else {
-            for (auto iter = sBlockingCallbacks[type].begin(); iter != sBlockingCallbacks[type].end();) {
-                if (iter->template target<std::function<void(BaseEvent &event)>>() == callback.target<std::function<void(BaseEvent &event)>>()) {
+            for (auto& element : sBlockingCallbacks[type]) {
+                if (element.template target<std::function<void(BaseEvent & event)>>() == callback.target<std::function<void(BaseEvent & event)>>()) {
                     // Pop and swap for performance - order of the vector does not matter. 
-                    std::swap(*iter, sBlockingCallbacks[type].back());
+                    std::swap(element, sBlockingCallbacks[type].back());
                     sBlockingCallbacks[type].pop_back();
-                } else {
-                    // We should only be iterating if a match was not found, so that we do not invalidate the iterator. 
-                    iter++;
                 }
             }
         }

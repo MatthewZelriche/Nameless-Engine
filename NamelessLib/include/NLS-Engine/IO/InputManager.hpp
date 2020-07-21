@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <array>
 
 #include "NLS-Engine/Core/NLS_API_Export.h"
 #include "NLS-Engine/IO/KeyBindingSet.hpp"
