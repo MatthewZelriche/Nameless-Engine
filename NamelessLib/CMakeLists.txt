@@ -13,13 +13,6 @@ if(DOXYGEN_FOUND)
     add_custom_target(DOXYGEN_DOCUMENTATION ALL ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
 endif(DOXYGEN_FOUND)
 
-
-set(VENDOR_INCLUDE_DIRS "${CMAKE_SOURCE_DIR}/Vendor/glfw/include"
-                        "${CMAKE_SOURCE_DIR}/Vendor/Nameless-Logger/include"
-                        "${CMAKE_SOURCE_DIR}/Vendor/glm/"
-                        "${CMAKE_SOURCE_DIR}/Vendor/robin-hood-hashing/include/"
-                        "${CMAKE_SOURCE_DIR}/Vendor/LeksysINI/"
-                        "${CMAKE_SOURCE_DIR}/Vendor/glad/include/")
 set(NLSLIB_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/include/")
 
 set(NLSLIB_SOURCES  "${CMAKE_SOURCE_DIR}/Vendor/glad/src/glad.c"
@@ -39,7 +32,10 @@ set(NLSLIB_SOURCES  "${CMAKE_SOURCE_DIR}/Vendor/glad/src/glad.c"
                     "${CMAKE_CURRENT_SOURCE_DIR}/src/Rendering/Window.cpp"
                     "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/IO/InputManager.hpp"
                     "${CMAKE_CURRENT_SOURCE_DIR}/src/IO/InputManager.cpp"
-                    "${CMAKE_CURRENT_SOURCE_DIR}/src/Rendering/GLContext.cpp")
+                    "${CMAKE_CURRENT_SOURCE_DIR}/src/Rendering/GLContext.cpp"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/ECS/ComponentHandler.hpp"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/ECS/ComponentTypes.hpp"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/ECS/ECSManager.hpp")
 
 add_library(NamelessLib SHARED ${NLSLIB_SOURCES})
 # To ensure functionality on Win10 with LeksysINI

@@ -11,6 +11,13 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/bin")
 configure_file("${CMAKE_SOURCE_DIR}/LICENSE.md" "${CMAKE_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/bin" COPYONLY)
 
+set(VENDOR_INCLUDE_DIRS "${CMAKE_SOURCE_DIR}/Vendor/glfw/include"
+                        "${CMAKE_SOURCE_DIR}/Vendor/Nameless-Logger/include"
+                        "${CMAKE_SOURCE_DIR}/Vendor/glm/"
+                        "${CMAKE_SOURCE_DIR}/Vendor/robin-hood-hashing/include/"
+                        "${CMAKE_SOURCE_DIR}/Vendor/LeksysINI/"
+                        "${CMAKE_SOURCE_DIR}/Vendor/glad/include/")
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 

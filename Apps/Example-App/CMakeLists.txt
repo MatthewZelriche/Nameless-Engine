@@ -11,5 +11,6 @@ configure_file("${CMAKE_CURRENT_SOURCE_DIR}/config/controls.ini" "${CMAKE_SOURCE
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/config/settings.ini" "${CMAKE_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/bin" COPYONLY)
 
 add_executable(ExampleApp ${SOURCES})
+target_include_directories(ExampleApp PUBLIC ${VENDOR_INCLUDE_DIRS})
 set_property(TARGET ExampleApp PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/bin")
 target_link_libraries(ExampleApp NamelessLib)
