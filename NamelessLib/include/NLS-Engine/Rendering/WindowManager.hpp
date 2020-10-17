@@ -36,5 +36,7 @@ public:
     * @returns True if there are no more living Window objects, false otherwise. 
     */
     static bool AllWindowsClosed();
+
+    static const std::list<std::shared_ptr<Window>>& GetListOfWindows();
 };
 }

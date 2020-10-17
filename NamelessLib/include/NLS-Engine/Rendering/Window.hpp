@@ -23,6 +23,7 @@ class NLS_API_EXPORT Window {
 public:
     /// Returns an instance to the GLFWwindow pointer object. For when you need to communicate with GLFW and it only accepts GLFWwindow*
     inline GLFWwindow* GetGLFWWindowInstance() const { return m_glfwWindowInstance.get(); }
+    void Render() const;
     
     friend WindowManager;
 private:
@@ -38,6 +39,8 @@ private:
         }
     };
     std::unique_ptr<GLFWwindow, GLFWDeleterWrapper> m_glfwWindowInstance { nullptr };
+
+    static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 };
 
 }

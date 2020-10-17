@@ -2,6 +2,7 @@
 
 #include "NLS-Engine/Core/NLS_API_Export.h"
 #include "NLS-Engine/EventSystem/EventCapable.hpp"
+#include "NLS-Engine/Rendering/GLContext.hpp"
 
 namespace NLS::Core {
 /**
@@ -13,6 +14,8 @@ public:
     virtual void Run() final;
 private:
     void InternalUpdate();
+
+    RENDERING::GLContext mGLContext;
 protected:
     IGameTemplate() = default;
     /// OnUpdate must be implemented by the child class. It runs as fast as possible, and would be used for things like rendering.

@@ -9,7 +9,11 @@
                 "${workspaceFolder}/Vendor/Nameless-Logger/Vendor/spdlog/include/",
                 "${workspaceFolder}/Vendor/glm/",
                 "${workspaceFolder}/Vendor/robin-hood-hashing/include/",
-                "${workspaceFolder}/Vendor/LeksysINI/"
+                "${workspaceFolder}/Vendor/LeksysINI/",
+                "${workspaceFolder}/Vendor/glad/include/"
+            ],
+            "defines": [
+                "GLFW_INCLUDE_NONE"
             ],
             "cppStandard": "c++17",
             "intelliSenseMode": "gcc-x64",

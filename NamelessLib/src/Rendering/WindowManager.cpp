@@ -42,3 +42,7 @@ void NLS::RENDERING::WindowManager::GetActiveWindow(GLFWwindow* window, int focu
         QueueNewEvent(windowFocusChanged);
     }
 }
+
+const std::list<std::shared_ptr<NLS::RENDERING::Window>>& NLS::RENDERING::WindowManager::GetListOfWindows() {
+    return sListOfWindows;
+}

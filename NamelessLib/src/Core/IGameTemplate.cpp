@@ -16,5 +16,10 @@ void NLS::Core::IGameTemplate::InternalUpdate() {
     // of our Systems for our ECS. But what about Entities that utilize FixedUpdate?
     while (!NLS::RENDERING::WindowManager::AllWindowsClosed()) {
         OnUpdate();
+
+        // Render windows.
+        for (auto &element : NLS::RENDERING::WindowManager::GetListOfWindows()) {
+            element->Render();
+        }
     }
 }
