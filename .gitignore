@@ -1,2 +1,4 @@
 build/
+NamelessLib/CSharpLibs/obj/
+NamelessLib/CSharpLibs/bin/
 NamelessLib/include/NLS-Engine/Core/NLS_API_Export.h

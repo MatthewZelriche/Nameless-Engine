@@ -10,7 +10,9 @@
                 "${workspaceFolder}/Vendor/glm/",
                 "${workspaceFolder}/Vendor/robin-hood-hashing/include/",
                 "${workspaceFolder}/Vendor/LeksysINI/",
-                "${workspaceFolder}/Vendor/glad/include/"
+                "${workspaceFolder}/Vendor/glad/include/",
+                "${workspaceFolder}/Vendor/NETCore/",
+                "${workspaceFolder}/Vendor/tinyxml2"
             ],
             "defines": [
                 "GLFW_INCLUDE_NONE"

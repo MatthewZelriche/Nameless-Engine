@@ -4,9 +4,11 @@ project(NamelessLib)
 
 add_subdirectory("${CMAKE_SOURCE_DIR}/Vendor/glfw" "${CMAKE_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/Vendor/glfw")
 add_subdirectory("${CMAKE_SOURCE_DIR}/Vendor/Nameless-Logger" "${CMAKE_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/Vendor/Nameless-Logger")
+add_subdirectory("${CMAKE_SOURCE_DIR}/Vendor/tinyxml2" "${CMAKE_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/Vendor/tinyxml2")
 find_package(Doxygen)
 find_package(Vulkan REQUIRED)
 
+configure_file("${CMAKE_SOURCE_DIR}/Vendor/NETCore/NLS.runtimeconfig.json" "${CMAKE_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/bin" COPYONLY)
 
 if(DOXYGEN_FOUND)
     configure_file(${CMAKE_SOURCE_DIR}/Doc/NamelessLib/Doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @ONLY)
@@ -35,7 +37,13 @@ set(NLSLIB_SOURCES  "${CMAKE_SOURCE_DIR}/Vendor/glad/src/glad.c"
                     "${CMAKE_CURRENT_SOURCE_DIR}/src/Rendering/GLContext.cpp"
                     "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/ECS/ComponentHandler.hpp"
                     "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/ECS/ComponentTypes.hpp"
-                    "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/ECS/ECSManager.hpp")
+                    "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/ECS/ECSManager.hpp"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/Core/Utils.hpp"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/SharpScripting/RuntimeHost.hpp"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/src/SharpScripting/RuntimeHost.cpp"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/SharpScripting/AssemblyManager.hpp"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/src/SharpScripting/AssemblyManager.cpp"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/SharpScripting/EngineDelegates.hpp")
 
 add_library(NamelessLib SHARED ${NLSLIB_SOURCES})
 # To ensure functionality on Win10 with LeksysINI
@@ -43,10 +51,22 @@ if (MSVC)
 	target_compile_options(NamelessLib PUBLIC "/Zc:__cplusplus")
 endif()
 
+# net host for scripting.
+find_library(nethost 
+            NAMES 
+                nethost.so libnethost.so nethost
+            HINTS 
+                # DOTNET_ROOT MUST be set if net-core is installed on a non-standard location.
+                "/usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/3.1.8/runtimes/linux-x64/native/"
+                "$ENV{DOTNET_ROOT}/packs/Microsoft.NETCore.App.Host.linux-x64/3.1.8/runtimes/linux-x64/native/")
+target_link_libraries(NamelessLib ${nethost})
+
+
 set_target_properties(NamelessLib PROPERTIES CXX_VISIBILITY_PRESET hidden)
 generate_export_header(NamelessLib BASE_NAME NLS_API EXPORT_FILE_NAME "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/Core/NLS_API_Export.h")
 target_include_directories(NamelessLib PUBLIC ${NLSLIB_INCLUDE_DIRS} ${VENDOR_INCLUDE_DIRS} ${Vulkan_INCLUDE_DIR})
 target_compile_definitions(NamelessLib PUBLIC GLFW_INCLUDE_NONE)
+target_link_libraries(NamelessLib tinyxml2)
 target_link_libraries(NamelessLib glfw)
 target_link_libraries(NamelessLib ${Vulkan_LIBRARIES})
 target_link_libraries(NamelessLib NamelessLogger)

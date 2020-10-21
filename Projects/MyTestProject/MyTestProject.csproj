@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <AssemblyName>MyTestProject</AssemblyName>
+    </PropertyGroup>
+    <ItemGroup>
+        <Reference Include="../../build/Debug/bin/NLSharpLib.dll"/>
+    </ItemGroup>
+</Project>

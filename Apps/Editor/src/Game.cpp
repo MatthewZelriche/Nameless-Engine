@@ -61,6 +61,8 @@ void Game::OnKeyPressed(const NLS::EVENT::OnKeyPressedEvent &test) {
 
 Game::Game() {
 
+    mSharpHost.CreateNewProject("MyTestProject");
+
     NLS::INPUT::KeyBindingSet mySet { "Jump", "Shoot", "Lurch" };
 
     NLS::INPUT::InputManager::LoadActiveKeybindingSet(std::move(mySet));

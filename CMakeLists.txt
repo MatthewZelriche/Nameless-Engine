@@ -16,11 +16,13 @@ set(VENDOR_INCLUDE_DIRS "${CMAKE_SOURCE_DIR}/Vendor/glfw/include"
                         "${CMAKE_SOURCE_DIR}/Vendor/glm/"
                         "${CMAKE_SOURCE_DIR}/Vendor/robin-hood-hashing/include/"
                         "${CMAKE_SOURCE_DIR}/Vendor/LeksysINI/"
-                        "${CMAKE_SOURCE_DIR}/Vendor/glad/include/")
+                        "${CMAKE_SOURCE_DIR}/Vendor/glad/include/"
+                        "${CMAKE_SOURCE_DIR}/Vendor/tinyxml2/"
+                        "${CMAKE_SOURCE_DIR}/Vendor/NETCore/")
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_subdirectory("${CMAKE_SOURCE_DIR}/NamelessLib/")
-add_subdirectory("${CMAKE_SOURCE_DIR}/Apps/Example-App")
+add_subdirectory("${CMAKE_SOURCE_DIR}/Apps/Editor")
 

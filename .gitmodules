@@ -13,3 +13,6 @@
 [submodule "Vendor/LeksysINI"]
 	path = Vendor/LeksysINI
 	url = https://github.com/Lek-sys/LeksysINI.git
+[submodule "Vendor/tinyxml2"]
+	path = Vendor/tinyxml2
+	url = https://github.com/leethomason/tinyxml2.git

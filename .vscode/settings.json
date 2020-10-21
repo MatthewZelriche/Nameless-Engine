@@ -1,6 +1,8 @@
 {
     "files.exclude": {
-        "build/": true
+        "build/": true,
+        "NamelessLib/CSharpLibs/obj": true,
+        "NamelessLib/CSharpLibs/bin": true
     },
     "files.associations": {
         "cctype": "cpp",
@@ -95,6 +97,7 @@
         "memory_resource": "cpp",
         "cfenv": "cpp",
         "cinttypes": "cpp",
-        "*.ipp": "cpp"
+        "*.ipp": "cpp",
+        "any": "cpp"
     },
 }

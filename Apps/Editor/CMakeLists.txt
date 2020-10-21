@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.13.0)
 
-project(ExampleApp)
+project(NamelessEditor)
 
 set(SOURCES     "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp"
                 "${CMAKE_CURRENT_SOURCE_DIR}/src/Game.hpp"
@@ -10,7 +10,7 @@ set(SOURCES     "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp"
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/config/controls.ini" "${CMAKE_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/bin" COPYONLY)
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/config/settings.ini" "${CMAKE_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/bin" COPYONLY)
 
-add_executable(ExampleApp ${SOURCES})
-target_include_directories(ExampleApp PUBLIC ${VENDOR_INCLUDE_DIRS})
-set_property(TARGET ExampleApp PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/bin")
-target_link_libraries(ExampleApp NamelessLib)
+add_executable(NamelessEditor ${SOURCES})
+target_include_directories(NamelessEditor PUBLIC ${VENDOR_INCLUDE_DIRS})
+set_property(TARGET NamelessEditor PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/bin")
+target_link_libraries(NamelessEditor NamelessLib)
