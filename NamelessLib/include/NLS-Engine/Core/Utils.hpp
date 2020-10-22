@@ -1,33 +1,34 @@
 #pragma once
 
 #include <string>
+#include <locale>
+#include <codecvt>
+#include <NetHost/nethost.h>
 
-#ifdef WIN32
-    #include <libloaderapi.h>
-#elif __linux__
+#ifdef __linux__
     #include <dlfcn.h>
+#else
+    #include <Windows.h>
+    #include <libloaderapi.h>
 #endif
 
 
 namespace NLS::Utils {
 
 
-#ifdef WIN32
-    HMODULE LoadLibrary(std::string libPath) {
-        return LoadLibraryExA(libPath.c_str(), NULL, 0);
-    }
+    std::string ConvertWideCharArrayToString(const char_t *input);
 
-    FARPROC GetFunctionPtr(HMODULE library, const char *functionName) {
-        return GetProcAddress(library, functionName);
-    }
-#elif __linux__
-    void *LoadLibrary(std::string libPath) {
-        return dlopen(libPath.c_str(), RTLD_NOW);
-    }
+    std::wstring ConvertStringToWString(std::string input);
 
-    void *GetFunctionPtr(void *library, const char *functionName) {
-        return dlsym(library, functionName);
-    }
+
+#ifdef __linux__
+    void* LoadLibrary(std::string libPath);
+
+    void* GetFunctionPtr(void* library, const char* functionName);
+#else
+    HMODULE LoadLibrary(std::string libPath);
+
+    FARPROC GetFunctionPtr(void* library, const char* functionName);
 #endif
 
 

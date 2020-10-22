@@ -6,9 +6,8 @@ set(SOURCES     "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp"
                 "${CMAKE_CURRENT_SOURCE_DIR}/src/Game.hpp"
                 "${CMAKE_CURRENT_SOURCE_DIR}/src/Game.cpp")
 
-# Move config files to bin directory. 
-configure_file("${CMAKE_CURRENT_SOURCE_DIR}/config/controls.ini" "${CMAKE_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/bin" COPYONLY)
-configure_file("${CMAKE_CURRENT_SOURCE_DIR}/config/settings.ini" "${CMAKE_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/bin" COPYONLY)
+configure_file("${CMAKE_SOURCE_DIR}/Apps/Editor/config/controls.ini" "${CMAKE_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/bin" COPYONLY)
+configure_file("${CMAKE_SOURCE_DIR}/Apps/Editor/config/settings.ini" "${CMAKE_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/bin" COPYONLY)
 
 add_executable(NamelessEditor ${SOURCES})
 target_include_directories(NamelessEditor PUBLIC ${VENDOR_INCLUDE_DIRS})

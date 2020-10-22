@@ -5,6 +5,8 @@
 #include <CoreCLR/coreclr_delegates.h>
 #include <Log.hpp>
 
+#include "NLS-Engine/Core/Utils.hpp"
+
 #include <string>
 
 class NLS_API_EXPORT AssemblyManager {
@@ -23,10 +25,10 @@ public:
 
         std::string assemblyQualifiedName = namespaceName + "." + className + ", " + assemblyName;
 
-        int errorCode = RetrieveFnPointer(assemblyPath.c_str(), 
-            assemblyQualifiedName.c_str(), 
-            methodName.c_str(), 
-            (namespaceName + "." + className + "+" + methodName + "Delegate" + ", " + assemblyName).c_str(), 
+        int errorCode = RetrieveFnPointer(NLS::Utils::ConvertStringToWString(assemblyPath).c_str(),
+            NLS::Utils::ConvertStringToWString(assemblyQualifiedName).c_str(),
+            NLS::Utils::ConvertStringToWString(methodName).c_str(),
+            NLS::Utils::ConvertStringToWString(namespaceName + "." + className + "+" + methodName + "Delegate" + ", " + assemblyName).c_str(), 
             nullptr, (void**)&function);
 
         if (errorCode != 0) {

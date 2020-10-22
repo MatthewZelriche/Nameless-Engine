@@ -10,6 +10,7 @@
 #include "NLS-Engine/Core/Utils.hpp"
 #include "NLS-Engine/SharpScripting/EngineDelegates.hpp"
 
+
 RuntimeHost::RuntimeHost() {
     LoadHost();
     StartNetRuntime();
@@ -23,7 +24,7 @@ RuntimeHost::RuntimeHost() {
 }
 
 void RuntimeHost::LoadHost() {
-    char buffer[4096];
+    char_t buffer[4096];
     size_t bufferSize = sizeof(buffer) / sizeof(char);
 
     int errorCode = get_hostfxr_path(buffer, &bufferSize, nullptr);
@@ -32,7 +33,11 @@ void RuntimeHost::LoadHost() {
         std::exit(-1);
     }
 
-    std::string fxrPath(buffer);
+    std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> converter;
+
+
+
+    std::string fxrPath = NLS::Utils::ConvertWideCharArrayToString(buffer);
     void* fxrLib = NLS::Utils::LoadLibrary(fxrPath);
 
     if (!fxrLib) {
@@ -60,7 +65,7 @@ void RuntimeHost::StartNetRuntime() {
     hostfxr_handle fxrHandle = nullptr;
 
     std::string configPath("NLS.runtimeconfig.json");
-    int errorCode = mInitializeNetFptr(configPath.c_str(), nullptr, &fxrHandle);
+    int errorCode = mInitializeNetFptr(NLS::Utils::ConvertStringToWString(configPath).c_str(), nullptr, &fxrHandle);
     if (errorCode != 0 || !fxrHandle) {
         NLSLOG::Error("Engine", "Could not start .NET Runtime Host! Aborting...");
         std::exit(-1);
