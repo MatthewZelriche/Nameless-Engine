@@ -18,7 +18,11 @@ namespace NLS::Utils {
 
     std::string ConvertWideCharArrayToString(const char_t *input);
 
+#ifdef __linux__
+    std::string ConvertStringToWString(std::string input);
+#else
     std::wstring ConvertStringToWString(std::string input);
+#endif
 
 
 #ifdef __linux__

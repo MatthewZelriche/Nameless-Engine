@@ -13,16 +13,6 @@ namespace NLS::Utils {
 #endif
     }
 
-    std::wstring ConvertStringToWString(std::string input) {
-#if __linux__
-        return input;
-#else
-        std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> converter;
-        return converter.from_bytes(input);
-#endif
-    }
-
-
 #ifdef __linux__
     void* LoadLibrary(std::string libPath) {
         return dlopen(libPath.c_str(), RTLD_NOW);
@@ -31,6 +21,10 @@ namespace NLS::Utils {
     void* GetFunctionPtr(void* library, const char* functionName) {
         return dlsym(library, functionName);
     }
+
+    std::string ConvertStringToWString(std::string input) {
+        return input;
+    }
 #else
     HMODULE LoadLibrary(std::string libPath) {
         return LoadLibraryExA(libPath.c_str(), NULL, 0);
@@ -38,6 +32,11 @@ namespace NLS::Utils {
 
     FARPROC GetFunctionPtr(void* library, const char* functionName) {
         return GetProcAddress((HMODULE)library, functionName);
+    }
+
+    std::wstring ConvertStringToWString(std::string input) {
+        std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> converter;
+        return converter.from_bytes(input);
     }
 #endif
 
