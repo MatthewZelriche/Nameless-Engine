@@ -9,6 +9,7 @@ class Game : public NLS::Core::IGameTemplate {
 public:
     Game();
 private:
+    void OnCreate() override;
     void OnUpdate() override;
 
     void Callback(const NLS::EVENT::OnWinFocusChangedEvent &test);

@@ -1,18 +1,31 @@
 #include "Game.hpp"
 
+#include <iostream>
+
 #include "Log.hpp"
 
 #include <NLS-Engine/IO/KeyBindingSet.hpp>
 #include <NLS-Engine/IO/InputManager.hpp>
+#include <NLS-Engine/Core/Engine.hpp>
 
 
 #include <NLS-Engine/ECS/ECSManager.hpp>
 #include <NLS-Engine/ECS/ComponentHandler.hpp>
 
-struct Position {
-    int x = 0;
-    int y= 0;
-    int z = 500;
+//struct Position {
+//    int x = 0;
+//    int y= 0;
+//    int z = 0;
+//};
+
+struct Pos2D {
+    float x = 0;
+    float y = 0;
+};
+
+struct Speed {
+    float speedX = 2.5f;
+    float speedY = 2.5f;
 };
 
 struct BenchPosition {
@@ -28,13 +41,13 @@ struct BenchDirection {
 };
 
 struct Health {
-    int health = 100;
+    int health = 0;
 };
 
 
-struct Renderable {
-    bool isRenderable = true;
-};
+//struct Renderable {
+//   bool isRenderable = true;
+//};
 
 struct ComflabulationComponent {
     float thingy;
@@ -61,15 +74,25 @@ void Game::OnKeyPressed(const NLS::EVENT::OnKeyPressedEvent &test) {
 
 Game::Game() {
 
-    mSharpHost.CreateNewProject("MyTestProject");
+}
 
+void Game::OnCreate() {
+    static std::chrono::steady_clock mytimer; 
+    static std::chrono::steady_clock::time_point myoldTime;
+    static std::chrono::duration<float, std::milli> mydeltaTime;
+
+    //std::unique_ptr<NLS::INPUT::KeyBindingSet> mySet = std::make_unique<NLS::INPUT::KeyBindingSet>(
+    //            std::initializer_list<std::string>({"Jump", "Shoot", "Lurch"}));
     NLS::INPUT::KeyBindingSet mySet { "Jump", "Shoot", "Lurch" };
 
-    NLS::INPUT::InputManager::LoadActiveKeybindingSet(std::move(mySet));
+    //Engine::GetEngine().GetInputManager().LoadActiveKeybindingSet(std::make_unique<NLS::INPUT::KeyBindingSet>(
+    //            std::initializer_list<std::string>({"Jump", "Shoot", "Lurch"})));
+    //NLS::INPUT::InputManager::LoadActiveKeybindingSet(mySet);
+    Engine::GetEngine().GetInputManager().LoadActiveKeybindingSet(mySet);
 
     // Event Testing
-    mWindow = NLS::RENDERING::WindowManager::ConstructWindow("First Window");
-    mSecondWindow = NLS::RENDERING::WindowManager::ConstructWindow("Second Window");
+    mWindow = Engine::GetEngine().GetWindowManager().ConstructWindow("First Window");
+    mSecondWindow = Engine::GetEngine().GetWindowManager().ConstructWindow("Second Window");
     NLS::EVENT::OnWinFocusChangedEvent myEvent(mWindow.lock()->GetGLFWWindowInstance());
     NLS::EVENT::OnKeyPressedEvent eventKey;
 
@@ -91,9 +114,6 @@ Game::Game() {
     QueueNewEvent(myEvent);
 
 
-
-
-
     // ECS Testing
     ECSManager manager;
 
@@ -101,22 +121,24 @@ Game::Game() {
     manager.CreateComponentHandler<Position>();
     manager.CreateComponentHandler<Health>();
     manager.CreateComponentHandler<Renderable>();
+    manager.CreateComponentHandler<Speed>();
+    manager.CreateComponentHandler<Pos2D>();
 
     manager.CreateComponentHandler<BenchPosition>();
     manager.CreateComponentHandler<BenchDirection>();
     manager.CreateComponentHandler<ComflabulationComponent>();
     
     for (uint64_t entity = 0; entity < 100000; entity++) {
-        //manager.AddComponentToEntity<BenchPosition>(entity, 9, 0);
-        //manager.AddComponentToEntity<BenchDirection>(entity);
-        manager.AddComponentToEntity<Health>(entity);
+        manager.AddComponentToEntity<Pos2D>(entity);
+        manager.AddComponentToEntity<Speed>(entity);
 
 
-        //if (entity % 2 != 0) {
-		//    manager.AddComponentToEntity<ComflabulationComponent>(entity);
+        //if (entity % 5 == 0) {
+		//    manager.AddComponentToEntity<Health>(entity);
 	    //}
     }
 
+    myoldTime = mytimer.now();
 
     //manager.AddComponentToEntity<Health>(0xFFF);
     //manager.AddComponentToEntity<Health>(0x21);
@@ -146,23 +168,53 @@ Game::Game() {
    }
    */
 
-  for (auto &element : manager.GetComponents<Health>()) {
-      element.second.health++;
+  auto elementList = manager.GetEntitiesWithComponents<Pos2D, Speed>();
+
+  for (EntityID element : *elementList) {
+    auto &elementPos = manager.GetComponent<Pos2D>(element);
+    auto &elementSpd = manager.GetComponent<Speed>(element);
+
+    elementPos.x += elementSpd.speedX * (1.0f / 60.0f);
+    elementPos.y += elementSpd.speedY * (1.0f / 60.0f);
+
   }
+
+  //for (auto &element : manager.GetComponents<Health>()) {
+  //    element.second.health++;
+  //}
+
+    mydeltaTime = mytimer.now() - myoldTime;
+
+    //NLSLOG::Warn("Game", "Time: {}", deltaTime.count());
+    std::cout << "Time: " << mydeltaTime.count() << std::endl;
+
+    //auto tempo = manager.GetEntitiesWithComponents<Health>();
+
+    //for (auto element : *tempo) {
+    //    NLSLOG::Trace("Game", "{}", element);
+    //}
+
+
+    //mSharpHost.RunFunc();
+    //Engine::GetEngine().GetRuntimeHost().RunFunc();
+
+
+    Engine::GetEngine().GetRuntimeHost().CreateNewProject("MyTestProject");
+    Engine::GetEngine().GetRuntimeHost().RunFunc();
 }
 
 void Game::OnUpdate() {
     ProcessEventQueue();
 
-    if (NLS::INPUT::InputManager::GetKeyDown("Jump")) {
+    if (Engine::GetEngine().GetInputManager().GetKeyDown("Jump")) {
         NLSLOG::Info("Game", "Player Jumped");
     }
 
-    if (NLS::INPUT::InputManager::GetKeyDown("Lurch", mWindow.lock()->GetGLFWWindowInstance())) {
+    if (Engine::GetEngine().GetInputManager().GetKeyDown("Lurch", mWindow.lock()->GetGLFWWindowInstance())) {
         NLSLOG::Info("Game", "Player Lurched");
     }
 
-    if (NLS::INPUT::InputManager::GetKeyDownSysDelay("Shoot")) {
+    if (Engine::GetEngine().GetInputManager().GetKeyDownSysDelay("Shoot")) {
         NLSLOG::Info("Game", "Pew pew");
     }
 }

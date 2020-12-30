@@ -13,7 +13,7 @@ endif()
 find_package(Doxygen)
 find_package(Vulkan REQUIRED)
 
-configure_file(${CMAKE_SOURCE_DIR}/Vendor/NETCore/NLS.runtimeconfig.json ${CMAKE_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/bin COPYONLY) 
+configure_file(${CMAKE_SOURCE_DIR}/Vendor/NETCore/NLS.runtimeconfig.json ${CMAKE_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/bin/NLSharp COPYONLY) 
 
 if(DOXYGEN_FOUND)
     configure_file(${CMAKE_SOURCE_DIR}/Doc/NamelessLib/Doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @ONLY)
@@ -49,9 +49,17 @@ set(NLSLIB_SOURCES  "${CMAKE_SOURCE_DIR}/Vendor/glad/src/glad.c"
                     "${CMAKE_CURRENT_SOURCE_DIR}/src/SharpScripting/RuntimeHost.cpp"
                     "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/SharpScripting/AssemblyManager.hpp"
                     "${CMAKE_CURRENT_SOURCE_DIR}/src/SharpScripting/AssemblyManager.cpp"
-                    "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/SharpScripting/EngineDelegates.hpp")
+                    "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/SharpScripting/EngineDelegates.hpp"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/ComponentSys/Component.hpp"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/ComponentSys/Entity.hpp"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/src/Core/Engine.cpp")
 
 add_library(NamelessLib SHARED ${NLSLIB_SOURCES})
+
+set_target_properties(NamelessLib PROPERTIES 
+                        LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/bin/$<0:>
+                        ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/bin/$<0:>
+                        RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/bin/$<0:>)  
 
 if (MSVC)
     # To ensure functionality on Win10 with LeksysINI
@@ -62,13 +70,10 @@ endif()
 
 # net host for scripting.
 find_library(nethost 
-            NAMES 
-                nethost.so libnethost.so nethost.lib
-            HINTS 
-		"C:/Program Files/dotnet/packs/Microsoft.NETCore.App.Host.win-x64/3.1.9/runtimes/win-x64/native"
-                # DOTNET_ROOT MUST be set if net-core is installed on a non-standard location.
-                "/usr/share/dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/3.1.8/runtimes/linux-x64/native/"
-                "$ENV{DOTNET_ROOT}/packs/Microsoft.NETCore.App.Host.linux-x64/3.1.8/runtimes/linux-x64/native/")
+            NAMES libnethost.so
+            PATHS "/home/$ENV{USER}/.dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/5.0.1/runtimes/linux-x64/native"
+            REQUIRED)
+
 
 if (MSVC)
     find_file(nethost_dll

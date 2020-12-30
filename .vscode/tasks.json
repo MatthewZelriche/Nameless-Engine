@@ -5,9 +5,12 @@
             
             "label": "Make & Build Debug",
             "type": "shell",
-            "command": "${workspaceFolder}/build.sh Debug",
+            "command": "${workspaceFolder}/BuildScripts/build.sh Debug",
             "args": [
                     ],
+            "options": {
+                "cwd": "${workspaceFolder}/BuildScripts/"
+            },
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -18,9 +21,28 @@
             
             "label": "Make & Build Release",
             "type": "shell",
-            "command": "${workspaceFolder}/build.sh Release",
+            "command": "${workspaceFolder}/BuildScripts/build.sh Release",
             "args": [
                     ],
+            "options": {
+                "cwd": "${workspaceFolder}/BuildScripts/"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            
+            "label": "Prepare Environment",
+            "type": "shell",
+            "command": "${workspaceFolder}/BuildScripts/pre-build.sh",
+            "args": [
+                    ],
+            "options": {
+                "cwd": "${workspaceFolder}/BuildScripts/"
+            },
             "group": {
                 "kind": "build",
                 "isDefault": true

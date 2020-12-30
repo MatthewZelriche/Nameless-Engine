@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>CSharpCompiler</AssemblyName>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="../../build/Debug/bin/NLSharp/Microsoft.CodeAnalysis.dll"/>
+    <Reference Include="../../build/Debug/bin/NLSharp/Microsoft.CodeAnalysis.CSharp.dll"/>
+  </ItemGroup>
+</Project>

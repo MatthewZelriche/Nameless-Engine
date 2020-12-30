@@ -6,8 +6,15 @@
 
 #include <CoreCLR/hostfxr.h>
 #include <CoreCLR/coreclr_delegates.h>
+#include "NLS-Engine/SharpScripting/EngineDelegates.hpp"
 
 #include "AssemblyManager.hpp"
+
+
+extern "C" {
+    bool NLS_API_EXPORT ExampleClassMethodBinding(Position &pos);
+}
+
 
 class NLS_API_EXPORT RuntimeHost {
 public:
@@ -15,9 +22,14 @@ public:
 
     bool CreateNewProject(std::string projectName) { return mAssemblyManager.CreateNewProject(projectName); }
 
+    void RunFunc();
+
 private:
     void LoadHost();
     void StartNetRuntime();
+
+    // Temp
+    NLSharpDelegates::GenerateNewSharpScript_fn testFunc {};
 
     AssemblyManager mAssemblyManager;
 

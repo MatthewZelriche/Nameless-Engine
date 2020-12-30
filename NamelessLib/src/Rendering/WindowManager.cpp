@@ -5,7 +5,6 @@
 #include <Log.hpp>
 
 
-std::list<std::shared_ptr<NLS::RENDERING::Window>> NLS::RENDERING::WindowManager::sListOfWindows;
 
 bool NLS::RENDERING::WindowManager::AllWindowsClosed() {
     // Check every GLFWwindow to see if any of them have recieved the terminate signal.

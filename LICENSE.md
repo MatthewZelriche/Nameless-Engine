@@ -31,17 +31,19 @@ Below are a list of licenses for third-party software.
 Third Party Licenses
 
 1. GLFW
-2. Nameless-Logger
-   2.1 spdlog
-   2.2 fmt
-3. glm
-4. cereal
-5. robin-hood-hashing
-6. LeksysINI
-7. glad
-   7.1 khrplatform.h
-8. coreclr_delegates.h, hostfxr.h, nethost.h
-9. tinyxml2
+2. .NET 5.0
+3. Nameless-Logger
+   3.1 spdlog
+   3.2 fmt
+4. glm
+5. cereal
+6. robin-hood-hashing
+7. LeksysINI
+8. glad
+   8.1 khrplatform.h
+9. coreclr_delegates.h, hostfxr.h, nethost.h
+10. tinyxml2
+11. MessagePack-CSharp
 
 
 ===============================================================================
@@ -75,8 +77,36 @@ freely, subject to the following restrictions:
 
 ===============================================================================
 
+2. .NET 5.0
 
-2. Nameless-Logger
+The MIT License (MIT)
+
+Copyright (c) .NET Foundation and Contributors
+
+All rights reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+===============================================================================
+
+3. Nameless-Logger
 
 MIT License Copyright (c) 2020 Matthew
 
@@ -99,7 +129,7 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
 OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-2.1 spdlog
+3.1 spdlog
 
 The MIT License (MIT)
 
@@ -128,7 +158,7 @@ This software depends on the fmt lib (MIT License),
 and users must comply to its license: https://github.com/fmtlib/fmt/blob/master/LICENSE.rst
 
 
-2.2 fmt
+3.2 fmt
 
 Copyright (c) 2012 - present, Victor Zverovich
 
@@ -162,7 +192,7 @@ without including the above copyright and permission notices.
 ===============================================================================
 
 
-3. glm
+4. glm
 
 ================================================================================
 The Happy Bunny License (Modified MIT License)
@@ -194,7 +224,7 @@ THE SOFTWARE.
 ===============================================================================
 
 
-4. cereal
+5. cereal
 
 Copyright (c) 2014, Randolph Voorhies, Shane Grant
 All rights reserved.
@@ -224,7 +254,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ===============================================================================
 
 
-5. robin-hood-hashing
+6. robin-hood-hashing
 
 MIT License
 
@@ -250,7 +280,7 @@ SOFTWARE.
 
 ===============================================================================
 
-6. LeksysINI
+7. LeksysINI
 
 MIT License
 
@@ -278,11 +308,11 @@ SOFTWARE.
 ===============================================================================
 
 
-7. glad
+8. glad
 
 Generated code licensed under public domain.
 
-7.1 khrplatform.h
+8.1 khrplatform.h
 
 /*
 ** Copyright (c) 2008-2018 The Khronos Group Inc.
@@ -311,7 +341,7 @@ Generated code licensed under public domain.
 ===============================================================================
 
 
-8. coreclr_delegates.h, hostfxr.h, nethost.h
+9. coreclr_delegates.h, hostfxr.h, nethost.h
 
 The MIT License (MIT)
 
@@ -341,7 +371,7 @@ SOFTWARE.
 ===============================================================================
 
 
-9. tinyxml2
+10. tinyxml2
 
 This software is provided 'as-is', without any express or implied
 warranty. In no event will the authors be held liable for any
@@ -362,5 +392,48 @@ must not be misrepresented as being the original software.
 3. This notice may not be removed or altered from any source
 distribution.
 
+===============================================================================
+
+11. MessagePack-CSharp
+
+MessagePack for C#
+
+MIT License
+
+Copyright (c) 2017 Yoshifumi Kawai and contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+lz4net
+
+Copyright (c) 2013-2017, Milosz Krajewski
+
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+
+Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ===============================================================================

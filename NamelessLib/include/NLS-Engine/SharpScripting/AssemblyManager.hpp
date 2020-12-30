@@ -28,7 +28,7 @@ public:
         int errorCode = RetrieveFnPointer(NLS::Utils::ConvertStringToWString(assemblyPath).c_str(),
             NLS::Utils::ConvertStringToWString(assemblyQualifiedName).c_str(),
             NLS::Utils::ConvertStringToWString(methodName).c_str(),
-            NLS::Utils::ConvertStringToWString(namespaceName + "." + className + "+" + methodName + "Delegate" + ", " + assemblyName).c_str(), 
+            UNMANAGEDCALLERSONLY_METHOD,
             nullptr, (void**)&function);
 
         if (errorCode != 0) {

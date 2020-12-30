@@ -8,34 +8,50 @@
 #include <NetHost/nethost.h>
 
 #include "NLS-Engine/Core/Utils.hpp"
-#include "NLS-Engine/SharpScripting/EngineDelegates.hpp"
+#include "NLS-Engine/ComponentSys/Component.hpp"
+#include "NLS-Engine/Core/Engine.hpp"
+#include "NLS-Engine/Rendering/WindowManager.hpp"
+
+
+// Bindings test
+extern "C" {
+    bool NLS_API_EXPORT ExampleClassMethodBinding(Position &pos) {
+        NLSLOG::Info("Engine", "Test: {}", pos.x);
+        return Engine::GetEngine().GetWindowManager().AllWindowsClosed();
+    }
+}
 
 
 RuntimeHost::RuntimeHost() {
     LoadHost();
     StartNetRuntime();
 
+    // Test retrieving a function from NLSharp. 
     NLSharpDelegates::GenerateNewSharpScript_fn function = mAssemblyManager.GetCustomCSharpFuncPointer<NLSharpDelegates::GenerateNewSharpScript_fn>(
-                                    mGetAssemblyFunctionFptr, "NLSharp.dll", "NLSharp", "NLSharp", "Roslyn", "GenerateScript");
+                                    mGetAssemblyFunctionFptr, "NLSharp/NLSharp.dll", "NLSharp", "NLSharp", "ScriptCreator", "CreateNewScriptComponent");
 
-    if (function) {
-        function(12);
-    }
+    
+    testFunc = function;
+}
+
+void RuntimeHost::RunFunc() {
+        if (testFunc) {
+
+            testFunc("MyNewScript", "MyTestProject");
+        }
 }
 
 void RuntimeHost::LoadHost() {
     char_t buffer[4096];
     size_t bufferSize = sizeof(buffer) / sizeof(char);
 
-    int errorCode = get_hostfxr_path(buffer, &bufferSize, nullptr);
+    // Hardcoding like this needed for using multiple different .net versions?
+    const get_hostfxr_parameters params {sizeof(hostfxr_initialize_parameters), "/home/nerevar/.dotnet/dotnet", "/home/nerevar/.dotnet"};
+    int errorCode = get_hostfxr_path(buffer, &bufferSize, &params);
     if (errorCode != 0) {
         NLSLOG::Error("Engine", "Failed to find hostfxr library! Aborting...");
         std::exit(-1);
     }
-
-    std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> converter;
-
-
 
     std::string fxrPath = NLS::Utils::ConvertWideCharArrayToString(buffer);
     void* fxrLib = NLS::Utils::LoadLibrary(fxrPath);
@@ -64,7 +80,7 @@ void RuntimeHost::StartNetRuntime() {
     void *tempFptr = nullptr;
     hostfxr_handle fxrHandle = nullptr;
 
-    std::string configPath("NLS.runtimeconfig.json");
+    std::string configPath("NLSharp/NLS.runtimeconfig.json");
     int errorCode = mInitializeNetFptr(NLS::Utils::ConvertStringToWString(configPath).c_str(), nullptr, &fxrHandle);
     if (errorCode != 0 || !fxrHandle) {
         NLSLOG::Error("Engine", "Could not start .NET Runtime Host! Aborting...");

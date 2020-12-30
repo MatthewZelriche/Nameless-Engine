@@ -19,11 +19,10 @@ private:
     RENDERING::GLContext mGLContext;
 protected:
 
-    RuntimeHost mSharpHost;
-
     IGameTemplate() = default;
     /// OnUpdate must be implemented by the child class. It runs as fast as possible, and would be used for things like rendering.
     virtual void OnUpdate() = 0;
+    virtual void OnCreate() { };
     /// OnFixedUpdate is optional, but should likely be implemented. It runs at a fixed timestep. 
     virtual void OnFixedUpdate() { };
 };

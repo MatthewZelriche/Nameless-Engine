@@ -1,0 +1,14 @@
+using System;
+using System.Runtime;
+using NLSharp;
+
+public class MyNewScript : NLSharp.ScriptBase
+{
+    public void OnCreate()
+    {
+    }
+
+    public void OnUpdate()
+    {
+    }
+}

@@ -23,7 +23,7 @@ bool AssemblyManager::CreateNewProject(std::string projectName) {
     root->SetAttribute("Sdk", "Microsoft.NET.Sdk");
 
     tinyxml2::XMLElement *propertyGroup = csprojFile.NewElement("PropertyGroup");
-    propertyGroup->InsertNewChildElement("TargetFramework")->SetText("netcoreapp3.1");
+    propertyGroup->InsertNewChildElement("TargetFramework")->SetText("net5.0");
     propertyGroup->InsertNewChildElement("AssemblyName")->SetText(projectName.c_str());
     root->InsertEndChild(propertyGroup);
 
@@ -39,6 +39,7 @@ bool AssemblyManager::CreateNewProject(std::string projectName) {
     root->InsertEndChild(itemGroup);
 
     csprojFile.InsertEndChild(root);
+    // TODO: Custom save paths in the future.
     std::string savePath("../../../Projects/" + projectName + "/" + projectName + ".csproj");
     csprojFile.SaveFile(savePath.c_str());
 

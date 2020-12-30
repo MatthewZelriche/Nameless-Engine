@@ -5,12 +5,11 @@
 GLFWwindow                      *NLS::INPUT::InputManager::sActiveWindow =                  nullptr;
 std::array<bool, NLS_MAX_KEYS>  NLS::INPUT::InputManager::sKeyStatesSysDelay =              { false };
 std::array<bool, NLS_MAX_KEYS>  NLS::INPUT::InputManager::sKeyStatesBinary =                { false };
-char                            NLS::INPUT::InputManager::sNewState =                       0;
-std::unique_ptr<NLS::INPUT::KeyBindingSet>  NLS::INPUT::InputManager::sLoadedKeyBindings =  nullptr;  
+char                            NLS::INPUT::InputManager::sNewState =                       0; 
 
 
-void NLS::INPUT::InputManager::LoadActiveKeybindingSet(KeyBindingSet &&keybinding) {
-    sLoadedKeyBindings = std::make_unique<KeyBindingSet>(keybinding);
+void NLS::INPUT::InputManager::LoadActiveKeybindingSet(KeyBindingSet keybinding) {
+    sLoadedKeyBindings = std::move(keybinding);
 }
 
 bool NLS::INPUT::InputManager::GetKeyDown(const std::string &bindingName) {
