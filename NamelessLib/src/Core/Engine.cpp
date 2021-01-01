@@ -1,10 +1,5 @@
 #include "NLS-Engine/Core/Engine.hpp"
 
-#include "NLS-Engine/SharpScripting/RuntimeHost.hpp"
-#include "NLS-Engine/IO/InputManager.hpp"
-#include "NLS-Engine/Rendering/WindowManager.hpp"
-#include "NLS-Engine/IO/InputManager.hpp"
-
 
 std::unique_ptr<Engine> Engine::mEngine = std::make_unique<Engine>();
 

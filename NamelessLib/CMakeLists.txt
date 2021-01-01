@@ -6,14 +6,9 @@ add_subdirectory("${CMAKE_SOURCE_DIR}/Vendor/glfw" "${CMAKE_SOURCE_DIR}/build/${
 add_subdirectory("${CMAKE_SOURCE_DIR}/Vendor/Nameless-Logger" "${CMAKE_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/Vendor/Nameless-Logger")
 add_subdirectory("${CMAKE_SOURCE_DIR}/Vendor/tinyxml2" "${CMAKE_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/Vendor/tinyxml2")
 
-if (MSVC)
-	add_subdirectory("${CMAKE_SOURCE_DIR}/NamelessLib/CSharpLibs/" "${CMAKE_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/Vendor/CSharpLibs")
-endif()
-
 find_package(Doxygen)
-find_package(Vulkan REQUIRED)
 
-configure_file(${CMAKE_SOURCE_DIR}/Vendor/NETCore/NLS.runtimeconfig.json ${CMAKE_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/bin/NLSharp COPYONLY) 
+configure_file(${CMAKE_SOURCE_DIR}/Vendor/NETCore/NLS.runtimeconfig.json ${CMAKE_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/bin/NLSharp/NLS.runtimeconfig.json COPYONLY) 
 
 if(DOXYGEN_FOUND)
     configure_file(${CMAKE_SOURCE_DIR}/Doc/NamelessLib/Doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @ONLY)
@@ -65,31 +60,34 @@ if (MSVC)
     # To ensure functionality on Win10 with LeksysINI
 	target_compile_options(NamelessLib PUBLIC "/Zc:__cplusplus")
 
-    add_dependencies(NamelessLib NLSharp)
 endif()
 
 # net host for scripting.
+if (UNIX)
 find_library(nethost 
             NAMES libnethost.so
             PATHS "/home/$ENV{USER}/.dotnet/packs/Microsoft.NETCore.App.Host.linux-x64/5.0.1/runtimes/linux-x64/native"
             REQUIRED)
-
+endif()
 
 if (MSVC)
+find_library(nethost 
+            NAMES nethost
+            PATHS "C:/Program Files/dotnet/packs/Microsoft.NETCore.App.Host.win-x64/5.0.1/runtimes/win-x64/native"
+            REQUIRED)
     find_file(nethost_dll
                 NAMES
                     nethost.dll
                 HINTS
-                    "C:/Program Files/dotnet/packs/Microsoft.NETCore.App.Host.win-x64/3.1.9/runtimes/win-x64/native")
+                    "C:/Program Files/dotnet/packs/Microsoft.NETCore.App.Host.win-x64/5.0.1/runtimes/win-x64/native")
 configure_file(${nethost_dll} ${CMAKE_SOURCE_DIR}/build/${CMAKE_BUILD_TYPE}/bin/ COPYONLY)
 endif()
 
 target_link_libraries(NamelessLib ${nethost})
 set_target_properties(NamelessLib PROPERTIES CXX_VISIBILITY_PRESET hidden)
 generate_export_header(NamelessLib BASE_NAME NLS_API EXPORT_FILE_NAME "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/Core/NLS_API_Export.h")
-target_include_directories(NamelessLib PUBLIC ${NLSLIB_INCLUDE_DIRS} ${VENDOR_INCLUDE_DIRS} ${Vulkan_INCLUDE_DIR})
+target_include_directories(NamelessLib PUBLIC ${NLSLIB_INCLUDE_DIRS} ${VENDOR_INCLUDE_DIRS})
 target_compile_definitions(NamelessLib PUBLIC GLFW_INCLUDE_NONE)
 target_link_libraries(NamelessLib tinyxml2)
 target_link_libraries(NamelessLib glfw)
-target_link_libraries(NamelessLib ${Vulkan_LIBRARIES})
 target_link_libraries(NamelessLib NamelessLogger)

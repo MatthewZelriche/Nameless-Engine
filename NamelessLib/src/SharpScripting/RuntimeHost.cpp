@@ -36,8 +36,9 @@ RuntimeHost::RuntimeHost() {
 
 void RuntimeHost::RunFunc() {
         if (testFunc) {
-
-            testFunc("MyNewScript", "MyTestProject");
+            std::string scriptName = "MyNewScript";
+            std::string projectName = "MyTestProject";
+            testFunc(NLS::Utils::ConvertStringToWString(scriptName).c_str(), NLS::Utils::ConvertStringToWString(projectName).c_str());
         }
 }
 
@@ -46,8 +47,8 @@ void RuntimeHost::LoadHost() {
     size_t bufferSize = sizeof(buffer) / sizeof(char);
 
     // Hardcoding like this needed for using multiple different .net versions?
-    const get_hostfxr_parameters params {sizeof(hostfxr_initialize_parameters), "/home/nerevar/.dotnet/dotnet", "/home/nerevar/.dotnet"};
-    int errorCode = get_hostfxr_path(buffer, &bufferSize, &params);
+    //const get_hostfxr_parameters params {sizeof(hostfxr_initialize_parameters), L"/home/nerevar/.dotnet/dotnet", L"/home/nerevar/.dotnet" };
+    int errorCode = get_hostfxr_path(buffer, &bufferSize, nullptr);
     if (errorCode != 0) {
         NLSLOG::Error("Engine", "Failed to find hostfxr library! Aborting...");
         std::exit(-1);

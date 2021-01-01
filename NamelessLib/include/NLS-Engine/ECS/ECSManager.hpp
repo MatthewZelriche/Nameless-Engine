@@ -10,9 +10,7 @@
 
 #include <Log.hpp>
 
-#include "ComponentHandler.hpp"
-
-#include "string"
+#include <string>
 
 #include <robin-hood/robin_hood.h>
 
@@ -66,9 +64,9 @@ private:
         // If they are, we do nothing. If they are missing from one or more other Handlers, we cull the entityID, as it
         // does not satisfy the user's request. 
         if ((args->m_components.contains(*id) && ...)) {
-            shouldIncrement == true;
+            shouldIncrement = true;
         } else {
-            shouldIncrement == false;
+            shouldIncrement = false;
             // Pop and swap entityID's to avoid costly vector erase
             *id = std::move(entities->back());
             entities->pop_back();
@@ -98,7 +96,7 @@ public:
         std::unique_ptr<EntityList> entities = std::make_unique<EntityList>();
 
         // Get the size in elements of the requested Component Handler that has the fewest number of components. 
-        int smallestCompSize = std::min({static_cast<ComponentHandler<Args>*>(componentHandlers.at(typeid(ComponentHandler<Args>)))->m_components.size()...});   
+        int smallestCompSize = (std::min)({static_cast<ComponentHandler<Args>*>(componentHandlers.at(typeid(ComponentHandler<Args>)))->m_components.size()...});   
 
         // We pass in our EntityList by reference and the function retrieves the entityID for every component in the smallest Component Handler.
         // We get entities from the smallest Component Handler first though that when we iterate over the entities to check if they exist in the other Component Handlers, 

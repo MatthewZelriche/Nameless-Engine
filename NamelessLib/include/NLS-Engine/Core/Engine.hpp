@@ -4,15 +4,9 @@
 
 #include "NLS-Engine/Core/NLS_API_Export.h"
 
-class RuntimeHost;
-
-namespace NLS::RENDERING {
-    class WindowManager;
-}
-
-namespace NLS::INPUT {
-    class InputManager;
-}
+#include "NLS-Engine/IO/InputManager.hpp"
+#include "NLS-Engine/Rendering/WindowManager.hpp"
+#include "NLS-Engine/SharpScripting/RuntimeHost.hpp"
 
 class NLS_API_EXPORT Engine {
 private:
