@@ -6,10 +6,10 @@
 
   <ItemGroup>
     <Reference Include="Microsoft.CodeAnalysis">
-      <HintPath>..\..\Vendor\NETCore\NET 5.0 SDK\Microsoft.CodeAnalysis.dll</HintPath>
+      <HintPath>..\..\Vendor\NETCore\NET5SDK\Microsoft.CodeAnalysis.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeAnalysis.CSharp">
-      <HintPath>..\..\Vendor\NETCore\NET 5.0 SDK\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
+      <HintPath>..\..\Vendor\NETCore\NET5SDK\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
     </Reference>
   </ItemGroup>
 

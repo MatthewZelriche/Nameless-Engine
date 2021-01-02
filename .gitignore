@@ -9,3 +9,4 @@ NLSharp/CSharpCompiler/obj
 NLSHarp/CSharpCompiler/bin
 Projects/MyTestProject/obj
 .vs/
+Projects/MyTestProject/bin/Test.dll

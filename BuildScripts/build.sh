@@ -19,12 +19,9 @@ build () {
     cmake -S../ -B../build/$buildType -DCMAKE_BUILD_TYPE=$buildType -DBUILD_SHARED_LIBS:BOOL=ON -DBUILD_TESTS:BOOL=OFF
     make -C../build/$buildType -j8
 
-    cp /home/$USER/.dotnet/sdk/5.0.101/Roslyn/bincore/Microsoft.CodeAnalysis.dll ../build/$buildType/bin/NLSharp/Microsoft.CodeAnalysis.dll
-    cp /home/$USER/.dotnet/sdk/5.0.101/Roslyn/bincore/Microsoft.CodeAnalysis.CSharp.dll ../build/$buildType/bin/NLSharp/Microsoft.CodeAnalysis.CSharp.dll
 
-
-    dotnet build ../NamelessLib/CSharpCompiler -o ../build/$buildType/bin/NLSharp
-    dotnet build ../NamelessLib/CSharpLibs -o ../build/$buildType/bin/NLSharp
+    dotnet build ../NLSharp/CSharpCompiler -o ../build/$buildType/bin/NLSharp
+    dotnet build ../NLSharp/CoreLibs -o ../build/$buildType/bin/NLSharp
 
 }
 
