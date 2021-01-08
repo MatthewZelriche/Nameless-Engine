@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.13.0)
 
 project(NamelessEngine)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+set(CMAKE_GENERATOR_PLATFORM x64)
 
 # For some reason, while doing a clean rebuild everything broke, I had to add this.
 # Otherwise cmake would try to make a file named bin instead of a dir named bin
