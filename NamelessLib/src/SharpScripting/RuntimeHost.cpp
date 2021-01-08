@@ -9,7 +9,7 @@
 
 #include "NLS-Engine/Core/Utils.hpp"
 #include "NLS-Engine/ComponentSys/Component.hpp"
-#include "NLS-Engine/Core/Engine.hpp"
+#include "NLS-Engine/Core/SubsystemLocator.hpp"
 #include "NLS-Engine/Rendering/WindowManager.hpp"
 
 
@@ -17,7 +17,7 @@
 extern "C" {
     bool NLS_API_EXPORT ExampleClassMethodBinding(Position &pos) {
         NLSLOG::Info("Engine", "Test: {}", pos.x);
-        return Engine::GetEngine().GetWindowManager().AllWindowsClosed();
+        return SubsystemLocator::GetWindowManager().AllWindowsClosed();
     }
 }
 

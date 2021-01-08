@@ -39,15 +39,18 @@ set(NLSLIB_SOURCES  "${CMAKE_SOURCE_DIR}/Vendor/glad/src/glad.c"
                     "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/ECS/ComponentTypes.hpp"
                     "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/ECS/ECSManager.hpp"
                     "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/Core/Utils.hpp"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/Core/EntryPoint.hpp"
                     "${CMAKE_CURRENT_SOURCE_DIR}/src/Core/Utils.cpp"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/src/Core/EntryPoint.cpp"
                     "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/SharpScripting/RuntimeHost.hpp"
                     "${CMAKE_CURRENT_SOURCE_DIR}/src/SharpScripting/RuntimeHost.cpp"
                     "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/SharpScripting/AssemblyManager.hpp"
-                    "${CMAKE_CURRENT_SOURCE_DIR}/src/SharpScripting/AssemblyManager.cpp"
                     "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/SharpScripting/EngineDelegates.hpp"
                     "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/ComponentSys/Component.hpp"
                     "${CMAKE_CURRENT_SOURCE_DIR}/include/NLS-Engine/ComponentSys/Entity.hpp"
-                    "${CMAKE_CURRENT_SOURCE_DIR}/src/Core/Engine.cpp")
+                    "${CMAKE_CURRENT_SOURCE_DIR}/src/Core/SubsystemLocator.cpp"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/src/Core/ProjectManager.cpp"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/src/Core/DefaultEngine.cpp")
 
 add_library(NamelessLib SHARED ${NLSLIB_SOURCES})
 

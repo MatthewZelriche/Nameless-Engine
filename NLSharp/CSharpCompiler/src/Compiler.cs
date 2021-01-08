@@ -13,30 +13,18 @@ namespace CSharpCompiler {
         //[DllImport("/home/nerevar/Programming/Zelriche/Nameless-Engine/build/Debug/bin/libNamelessLib.so")]
         //public static extern bool ExampleClassMethodBinding(Position pos);
 
-        public static void CCCCCreateNewScriptComponent(string name, string projectName) {
-            //Directory.CreateDirectory("../../../Projects/" + Marshal.PtrToStringAuto(projectName) + "/" + "bin/");
-            //SaveScriptToFile(GenerateScript(Marshal.PtrToStringAuto(name)), Marshal.PtrToStringAuto(projectName), Marshal.PtrToStringAuto(name));
-
-
-            //Type type = Type.GetType("NLSharp.")
-            //var instance = Activator.CreateInstance()
-            //var temp = new ScriptComponent();
-        }
-
         public static void SaveScriptToFile(string scriptContents, string projectName, string scriptName) {
-            Directory.CreateDirectory("../../../Projects/" + projectName + "/" + "Scripts/");
-            File.WriteAllText("../../../Projects/" + projectName + "/" + "Scripts/" + scriptName + ".scr", scriptContents);
+            File.WriteAllText("../../../Projects/" + projectName + "/" + "AuthorContent/Scripts/" + scriptName + ".scr", scriptContents);
         }
 
-        public static void CompileScript(string projectName, string name) {
+        public static void CompileScript(string projectName, string name, string assemblyName) {
                         // Test
             var dotNetCoreDir = Path.GetDirectoryName(typeof(object).GetTypeInfo().Assembly.Location);
             var runtimeRef = MetadataReference.CreateFromFile(Path.Combine(dotNetCoreDir, "System.Runtime.dll"));
 
             // CompileScript(name)
-            var source = File.ReadAllText("../../../Projects/" + projectName + "/" + "Scripts/" + name + ".scr");
+            var source = File.ReadAllText("../../../Projects/" + projectName + "/" + "AuthorContent/Scripts/" + name + ".scr");
             var syntaxTree = CSharpSyntaxTree.ParseText(source);
-            string assemblyName = "Test.dll";
             var objectRef = MetadataReference.CreateFromFile(typeof(object).Assembly.Location);
             var NLSharpRef = MetadataReference.CreateFromFile("NLSharp/NLSharp.dll");
             var options = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, assemblyIdentityComparer: DesktopAssemblyIdentityComparer.Default);
@@ -45,7 +33,7 @@ namespace CSharpCompiler {
             //var hashTest = source.GetHashCode();
             //Console.WriteLine(hashTest);
 
-            var result = testt.Emit("../../../Projects/" + projectName + "/" + "bin/" + assemblyName);
+            var result = testt.Emit("../../../Projects/" + projectName + "/" + "bin/" + assemblyName + ".dll");
 
             if (!result.Success) {
                 foreach(var diagnostic in result.Diagnostics)

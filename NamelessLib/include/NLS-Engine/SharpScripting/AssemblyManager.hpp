@@ -11,7 +11,6 @@
 
 class NLS_API_EXPORT AssemblyManager {
 public:
-    bool CreateNewProject(std::string projectName);
     
     template <typename T>
     T GetCustomCSharpFuncPointer(load_assembly_and_get_function_pointer_fn RetrieveFnPointer, 

@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -29,26 +30,12 @@ public class MyClass
 
         [UnmanagedCallersOnly]
         public static void CreateNewScriptComponent(IntPtr name, IntPtr projectName) {
-            Directory.CreateDirectory("../../../Projects/" + Marshal.PtrToStringAuto(projectName) + "/" + "bin/");
             CSharpCompiler.Compiler.SaveScriptToFile(CSharpCompiler.Compiler.GenerateScript(Marshal.PtrToStringAuto(name)), Marshal.PtrToStringAuto(projectName), Marshal.PtrToStringAuto(name));
-            CSharpCompiler.Compiler.CompileScript(Marshal.PtrToStringAuto(projectName), Marshal.PtrToStringAuto(name));
-                var mc = new MyClass
-        {
-            Age = 99,
-            FirstName = "hoge",
-            LastName = "huga",
-        };
+            CSharpCompiler.Compiler.CompileScript(Marshal.PtrToStringAuto(projectName), Marshal.PtrToStringAuto(name), "TempAssemblyName");
 
-        // Call Serialize/Deserialize, that's all.
-        byte[] bytes = MessagePackSerializer.Serialize(mc);
-        MyClass mc2 = MessagePackSerializer.Deserialize<MyClass>(bytes);
 
-        // You can dump MessagePack binary blobs to human readable json.
-        // Using indexed keys (as opposed to string keys) will serialize to MessagePack arrays,
-        // hence property names are not available.
-        // [99,"hoge","huga"]
-        var json = MessagePackSerializer.ConvertToJson(bytes);
-        Console.WriteLine(json);
+            Assembly assembly = Assembly.LoadFrom("/home/nerevar/Programming/Zelriche/Nameless-Engine/Projects/MyTestProject/bin/TempAssemblyName.dll");
+            //var test = assembly.DefinedTypes;
         }
 
     }

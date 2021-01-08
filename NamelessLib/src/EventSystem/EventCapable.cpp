@@ -1,7 +1,7 @@
 #include "NLS-Engine/EventSystem/EventCapable.hpp"
 
 #include "NLS-Engine/IO/InputManager.hpp"
-#include "NLS-Engine/Core/Engine.hpp"
+#include "NLS-Engine/Core/SubsystemLocator.hpp"
 
 #include "Log.hpp"
 
@@ -23,7 +23,7 @@ void NLS::EVENT::EventCapable::ProcessEventQueue() {
         }
         sListOfQueuedEvents.clear();
     }
-    Engine::GetEngine().GetInputManager().FlushKeys();
+    SubsystemLocator::GetInputManager().FlushKeys();
 
     glfwPollEvents();
 }

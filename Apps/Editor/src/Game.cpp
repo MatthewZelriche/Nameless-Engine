@@ -6,7 +6,7 @@
 
 #include <NLS-Engine/IO/KeyBindingSet.hpp>
 #include <NLS-Engine/IO/InputManager.hpp>
-#include <NLS-Engine/Core/Engine.hpp>
+#include <NLS-Engine/Core/SubsystemLocator.hpp>
 
 
 #include <NLS-Engine/ECS/ECSManager.hpp>
@@ -88,11 +88,11 @@ void Game::OnCreate() {
     //Engine::GetEngine().GetInputManager().LoadActiveKeybindingSet(std::make_unique<NLS::INPUT::KeyBindingSet>(
     //            std::initializer_list<std::string>({"Jump", "Shoot", "Lurch"})));
     //NLS::INPUT::InputManager::LoadActiveKeybindingSet(mySet);
-    Engine::GetEngine().GetInputManager().LoadActiveKeybindingSet(mySet);
+    SubsystemLocator::GetInputManager().LoadActiveKeybindingSet(mySet);
 
     // Event Testing
-    mWindow = Engine::GetEngine().GetWindowManager().ConstructWindow("First Window");
-    mSecondWindow = Engine::GetEngine().GetWindowManager().ConstructWindow("Second Window");
+    mWindow = SubsystemLocator::GetWindowManager().ConstructWindow("First Window");
+    mSecondWindow = SubsystemLocator::GetWindowManager().ConstructWindow("Second Window");
     NLS::EVENT::OnWinFocusChangedEvent myEvent(mWindow.lock()->GetGLFWWindowInstance());
     NLS::EVENT::OnKeyPressedEvent eventKey;
 
@@ -199,22 +199,23 @@ void Game::OnCreate() {
     //Engine::GetEngine().GetRuntimeHost().RunFunc();
 
 
-    Engine::GetEngine().GetRuntimeHost().CreateNewProject("MyTestProject");
-    Engine::GetEngine().GetRuntimeHost().RunFunc();
+    SubsystemLocator::GetProjectManager().CreateNewProject("MyTestProject", "/home/nerevar/Programming/Zelriche/Nameless-Engine/Projects/");
+    SubsystemLocator::GetProjectManager().BuildProject("MyTestProject", "/home/nerevar/Programming/Zelriche/Nameless-Engine/Projects/");
+    SubsystemLocator::GetRuntimeHost().RunFunc();
 }
 
 void Game::OnUpdate() {
     ProcessEventQueue();
 
-    if (Engine::GetEngine().GetInputManager().GetKeyDown("Jump")) {
+    if (SubsystemLocator::GetInputManager().GetKeyDown("Jump")) {
         NLSLOG::Info("Game", "Player Jumped");
     }
 
-    if (Engine::GetEngine().GetInputManager().GetKeyDown("Lurch", mWindow.lock()->GetGLFWWindowInstance())) {
+    if (SubsystemLocator::GetInputManager().GetKeyDown("Lurch", mWindow.lock()->GetGLFWWindowInstance())) {
         NLSLOG::Info("Game", "Player Lurched");
     }
 
-    if (Engine::GetEngine().GetInputManager().GetKeyDownSysDelay("Shoot")) {
+    if (SubsystemLocator::GetInputManager().GetKeyDownSysDelay("Shoot")) {
         NLSLOG::Info("Game", "Pew pew");
     }
 }

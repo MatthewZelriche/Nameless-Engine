@@ -2,7 +2,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Launch Debug Executable",
+            "name": "Debug NLSharp Managed Libraries",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/Debug/bin/NamelessEditor",
+            "args": [],
+            "cwd": "${workspaceFolder}/build/Debug/bin/",
+            "stopAtEntry": false,
+            "justMyCode": true,
+            "console": "internalConsole"
+        },
+        {
+            "name": "Debug Native C++ Engine",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/Debug/bin/NamelessEditor",

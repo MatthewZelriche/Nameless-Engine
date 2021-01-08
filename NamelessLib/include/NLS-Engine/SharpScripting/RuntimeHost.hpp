@@ -20,8 +20,6 @@ class NLS_API_EXPORT RuntimeHost {
 public:
     RuntimeHost();
 
-    bool CreateNewProject(std::string projectName) { return mAssemblyManager.CreateNewProject(projectName); }
-
     void RunFunc();
 
 private:
